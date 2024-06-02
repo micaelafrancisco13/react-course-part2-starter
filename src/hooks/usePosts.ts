@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 interface Post {
     id: number;
@@ -15,27 +15,32 @@ interface PostQuery {
 }
 
 const usePosts = (query: PostQuery) => {
-    const { userId, page, pageSize } = query;
+    const { pageSize } = query;
 
-    return useQuery({
+    // replace useQuery with useInfiniteQuery
+    return useInfiniteQuery({
         queryKey: ['users', query, 'posts'],
-        // anytime our 'query' changes, react query will fetch the posts from the backend
-        queryFn: () => axios
+        queryFn: ({ pageParam = 1 }) => axios
             .get<Post[]>('https://jsonplaceholder.typicode.com/posts', {
                 params: {
                     // userId, // comment out for now as jsonplaceholder does not support this
-                    _start: (page - 1) * pageSize,
+                    _start: (pageParam - 1) * pageSize,
                     _limit: pageSize
                 }
                 // page 1: 0 to 9,
                 // page 2: 10 to 19,
             })
             .then((res) => res.data),
-        staleTime: (1 * 60) * 1000, // 60 seconds
+        staleTime: 60 * 1000,
         placeholderData: (previous) => previous,
-        // - when navigating to the next page, the page jumps from the bottom to up, using this
-        //   prevents this behaviour
-        // - this keeps the data on the current page while waiting for the new data
+        initialPageParam: 1,
+        // when "Load More" button is clicked, the function below will be called then the page
+        // number will be passed as a property to the query function
+        getNextPageParam: (lastPage, allPages) => {
+            // allPages - every element in this array, is a Post[]
+            // we should return the next page number
+            return lastPage.length > 0 ? allPages.length + 1 : undefined;
+        }
     });
 };
 
