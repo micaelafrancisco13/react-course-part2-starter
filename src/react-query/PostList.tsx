@@ -3,9 +3,16 @@ import React, { useState } from "react";
 
 const PostList = () => {
     const [userId, setUserId] = useState<number>();
+    const pageSize = 10;
+    const [page, setPage] = useState(1);
 
-    // filter posts by selected user from the dropdown menu
-    const { data: posts, error, isLoading } = usePosts(userId);
+    // filter posts by selected user and current page number from the dropdown menu
+    const { data: posts, error, isLoading } = usePosts({
+            userId,
+            page,
+            pageSize
+        }
+    );
 
     if (isLoading) return <p>Loading...</p>;
 
@@ -29,6 +36,15 @@ const PostList = () => {
                     </li>
                 ))}
             </ul>
+            <div className="my-3">
+                <button className="btn btn-primary me-3"
+                        disabled={page === 1}
+                        onClick={() => setPage(page - 1)}>Previous
+                </button>
+                <button className="btn btn-primary"
+                        onClick={() => setPage(page + 1)}>Next
+                </button>
+            </div>
         </>
     );
 };
