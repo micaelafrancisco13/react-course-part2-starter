@@ -27,8 +27,6 @@ const usePosts = (query: PostQuery) => {
                     _start: (pageParam - 1) * pageSize,
                     _limit: pageSize
                 }
-                // page 1: 0 to 9,
-                // page 2: 10 to 19,
             })
             .then((res) => res.data),
         staleTime: 60 * 1000,
