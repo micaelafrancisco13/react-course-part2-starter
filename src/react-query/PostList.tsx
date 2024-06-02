@@ -7,7 +7,7 @@ const PostList = () => {
     const [page, setPage] = useState(1);
 
     // filter posts by selected user and current page number from the dropdown menu
-    const { data: posts, error, isLoading } = usePosts({
+    const { data: posts, error, isLoading, fetchNextPage, isFetchingNextPage } = usePosts({
             userId,
             page,
             pageSize
@@ -30,19 +30,21 @@ const PostList = () => {
                 <option value="3">User 3</option>
             </select>
             <ul className="list-group">
-                {posts?.map((post) => (
-                    <li key={post.id} className="list-group-item">
-                        {post.title}
-                    </li>
+                {/* pages property contains the data for all pages */}
+                {posts?.pages.map((page, index) => (
+                    <React.Fragment key={index}>
+                        {page.map((post) => (
+                            <li key={post.id} className="list-group-item">
+                                {post.title}
+                            </li>
+                        ))}
+                    </React.Fragment>
                 ))}
             </ul>
             <div className="my-3">
-                <button className="btn btn-primary me-3"
-                        disabled={page === 1}
-                        onClick={() => setPage(page - 1)}>Previous
-                </button>
                 <button className="btn btn-primary"
-                        onClick={() => setPage(page + 1)}>Next
+                        onClick={() => fetchNextPage()}
+                        disabled={isFetchingNextPage}> {isFetchingNextPage ? 'Loading...' : 'Load More'}
                 </button>
             </div>
         </>
