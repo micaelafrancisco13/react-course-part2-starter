@@ -8,16 +8,31 @@ interface Post {
     userId: number;
 }
 
-const usePosts = () => {
+const usePosts = (userId: number | undefined) => {
     const fetchPosts = () => axios
-        .get<Post[]>('https://jsonplaceholder.typicode.com/posts')
+        .get<Post[]>('https://jsonplaceholder.typicode.com/posts', {
+            params: {
+                userId
+            }
+        })
         .then((res) => res.data)
 
     return useQuery({
-        queryKey: ['posts'],
+        // similar to structuring a backend API (e.g., api/users/13/posts)
+        // as we get from left to right, the data gets more specific
+        // userId acts like a dependency of useEffect
+        // go to line 13
+        queryKey: userId ? ['users', userId, 'posts'] : ['posts'],
         queryFn: fetchPosts,
         staleTime: (1 * 60) * 1000 // 60 seconds
-    }); // returns a query object with properties like data, error, isLoading, and so on...
+    });
+
+    // cached would be
+    // ["posts"]
+    // ["users, 1, "posts]
+
+    // if any of the user id is already selected, once you select it again,
+    // you'll no longer see a loading indicator because the data is coming from the cache
 };
 
 export default usePosts;
