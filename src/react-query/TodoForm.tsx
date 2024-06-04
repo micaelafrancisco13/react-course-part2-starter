@@ -6,26 +6,17 @@ import axios from "axios";
 const TodoForm = () => {
     const queryClient = useQueryClient();
 
-    // if unknown type is encountered, deal with it using generics
-    // useMutation<DataTypeReceived, ErrorType, DataTypeSent>
     const addTodo = useMutation<Todo, Error, Todo>({
         mutationFn: (todo: Todo) =>
-            axios.post<Todo>('https://jsonplaceholder.typicode.com/todosx', todo)
+            axios.post<Todo>('https://jsonplaceholder.typicode.com/todos', todo)
                 .then(res => res.data),
         onSuccess: (savedTodo, newTodo) => {
-            console.log(savedTodo);
-            console.log(newTodo);
-
-            queryClient.invalidateQueries({
-                queryKey: ['todos'],
-            }).then(response => {
-                console.log(response)
-            });
-
             queryClient.setQueryData<Todo[]>(['todos'], (todos) =>
                 [savedTodo, ...(todos || [])]);
+
+            if (ref.current)
+                ref.current.value = '';
         },
-        // onError: () =>
     });
     const ref = useRef<HTMLInputElement>(null);
 
@@ -36,7 +27,6 @@ const TodoForm = () => {
             )}
             <form className="row mb-3" onSubmit={event => {
                 event.preventDefault();
-                // mutation hook in react query
                 if (ref.current && ref.current.value) {
                     const newTodo = {
                         id: 0,
@@ -51,7 +41,8 @@ const TodoForm = () => {
                     <input ref={ref} type="text" className="form-control"/>
                 </div>
                 <div className="col">
-                    <button className="btn btn-primary">Add</button>
+                    <button className="btn btn-primary"
+                            disabled={addTodo.isPending}>{addTodo.isPending ? 'Adding...' : 'Add'}</button>
                 </div>
             </form>
         </>
