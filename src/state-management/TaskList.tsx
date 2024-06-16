@@ -1,9 +1,14 @@
-import {useReducer, useState} from 'react';
+import {useContext, useReducer, useState} from 'react';
 import tasksReducer from "./reducers/tasksReducer";
+import TasksContext from "./context/tasksContext";
 
 
 const TaskList = () => {
-    const [tasks, dispatch] = useReducer(tasksReducer, []);
+    // the useState and useReducer hook are ways to maintain local state in a component
+
+    // use the useContext hook to access the lifted state
+    const { tasks,dispatch } = useContext(TasksContext);
+
 
     return (
         <>
