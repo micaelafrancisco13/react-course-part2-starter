@@ -1,9 +1,10 @@
-import {useContext} from "react";
-import AuthContext from "./context/authContext";
+import useAuth from "./hooks/useAuth";
 
 const LoginStatus = () => {
-    const {user, dispatch} = useContext(AuthContext);
-    
+    // by encapsulating the useContext inside useAuth, we don't have to think about a particular
+    // context to utilize, we can simply use our hook to get the shared objects
+    const {user, dispatch} = useAuth();
+
     if (user)
         return (
             <>
