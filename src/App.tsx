@@ -4,13 +4,11 @@ import tasksReducer from "./state-management/reducers/tasksReducer";
 import TasksContext from "./state-management/context/tasksContext";
 import NavBar from "./state-management/NavBar";
 import HomePage from "./state-management/HomePage";
-import authReducer from "./state-management/reducers/authReducer";
-import AuthContext from "./state-management/context/authContext";
+import AuthProvider from "./state-management/AuthProvider";
 
 function App() {
     // lift the local state up
     const [tasks, taskDispatch] = useReducer(tasksReducer, []);
-    const [user, authDispatch] = useReducer(authReducer, '');
 
     // first, lift the local state up to the App component
     // second, create a context object with two properties of data [state, setState]
@@ -19,12 +17,12 @@ function App() {
 
     // wrap the component tree with Provider component
     return (
-        <AuthContext.Provider value={{user, dispatch: authDispatch}}>
+        <AuthProvider>
             <TasksContext.Provider value={{tasks, dispatch: taskDispatch}}>
                 <NavBar/>
                 <HomePage/>
             </TasksContext.Provider>
-        </AuthContext.Provider>
+        </AuthProvider>
     );
 }
 
