@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { CACHE_KEY_TODOS } from "../react-query/constants";
+import {useQuery} from "@tanstack/react-query";
+import {CACHE_KEY_TODOS} from "../react-query/constants";
 
 export interface Todo {
     id: number;

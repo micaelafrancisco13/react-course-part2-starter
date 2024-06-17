@@ -1,5 +1,4 @@
-import {useContext, useReducer, useState} from 'react';
-import tasksReducer from "./reducers/tasksReducer";
+import {useContext} from 'react';
 import TasksContext from "./context/tasksContext";
 
 
@@ -7,14 +6,14 @@ const TaskList = () => {
     // the useState and useReducer hook are ways to maintain local state in a component
 
     // use the useContext hook to access the lifted state
-    const { tasks,dispatch } = useContext(TasksContext);
+    const {tasks, dispatch} = useContext(TasksContext);
 
 
     return (
         <>
             <button
                 onClick={() =>
-                    dispatch({ type: 'ADD', task: { id: Date.now(), title: `Task ${Date.now()}` }})
+                    dispatch({type: 'ADD', task: {id: Date.now(), title: `Task ${Date.now()}`}})
                 }
                 className="btn btn-primary my-3"
             >
@@ -30,7 +29,7 @@ const TaskList = () => {
                         <button
                             className="btn btn-outline-danger"
                             onClick={() =>
-                                dispatch({ type: 'DELETE', taskId: task.id })
+                                dispatch({type: 'DELETE', taskId: task.id})
                             }
                         >
                             Delete

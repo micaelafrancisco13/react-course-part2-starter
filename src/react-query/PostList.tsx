@@ -1,5 +1,5 @@
 import usePosts from "../hooks/usePosts";
-import React, { useState } from "react";
+import React, {useState} from "react";
 
 const PostList = () => {
     const [userId, setUserId] = useState<number>();
@@ -7,7 +7,7 @@ const PostList = () => {
     const [page, setPage] = useState(1);
 
     // filter posts by selected user and current page number from the dropdown menu
-    const { data: posts, error, isLoading, fetchNextPage, isFetchingNextPage } = usePosts({
+    const {data: posts, error, isLoading, fetchNextPage, isFetchingNextPage} = usePosts({
             userId,
             page,
             pageSize

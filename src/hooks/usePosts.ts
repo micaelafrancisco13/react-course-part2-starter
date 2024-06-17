@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {useInfiniteQuery} from "@tanstack/react-query";
 
 interface Post {
     id: number;
@@ -15,12 +15,12 @@ interface PostQuery {
 }
 
 const usePosts = (query: PostQuery) => {
-    const { pageSize } = query;
+    const {pageSize} = query;
 
     // replace useQuery with useInfiniteQuery
     return useInfiniteQuery({
         queryKey: ['users', query, 'posts'],
-        queryFn: ({ pageParam = 1 }) => axios
+        queryFn: ({pageParam = 1}) => axios
             .get<Post[]>('https://jsonplaceholder.typicode.com/posts', {
                 params: {
                     // userId, // comment out for now as jsonplaceholder does not support this
