@@ -6,16 +6,15 @@ const TaskList = () => {
     // the useState and useReducer hook are ways to maintain local state in a component
 
     // use the useContext hook to access the lifted state
-    const {tasks, dispatch} = useTasks();
-    const {user,} = useAuth();
-
+    const { tasks, dispatch } = useTasks();
+    const { user, } = useAuth();
 
     return (
         <>
             <p>User {user}</p>
             <button
                 onClick={() =>
-                    dispatch({type: 'ADD', task: {id: Date.now(), title: `Task ${Date.now()}`}})
+                    dispatch({ type: 'ADD', task: { id: Date.now(), title: `Task ${Date.now()}` } })
                 }
                 className="btn btn-primary my-3"
             >
@@ -31,7 +30,7 @@ const TaskList = () => {
                         <button
                             className="btn btn-outline-danger"
                             onClick={() =>
-                                dispatch({type: 'DELETE', taskId: task.id})
+                                dispatch({ type: 'DELETE', taskId: task.id })
                             }
                         >
                             Delete

@@ -1,7 +1,7 @@
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {Todo} from "./useTodos";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Todo } from "./useTodos";
 import axios from "axios";
-import {CACHE_KEY_TODOS} from "../react-query/constants";
+import { CACHE_KEY_TODOS } from "../react-query/constants";
 
 interface AddTodoContext {
     previousTodos: Todo[];
@@ -22,7 +22,7 @@ const useAddTodo = (onAdd: () => void) => {
 
             onAdd();
 
-            return {previousTodos};
+            return { previousTodos };
         },
         onSuccess: (savedTodo, newTodo) => {
             queryClient.setQueryData<Todo[]>(CACHE_KEY_TODOS, (todos) =>
