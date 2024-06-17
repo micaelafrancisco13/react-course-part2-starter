@@ -1,14 +1,13 @@
-import {useContext} from 'react';
-import TasksContext from "./context/tasksContext";
-import AuthContext from "./context/authContext";
+import useAuth from "./hooks/useAuth";
+import useTasks from "./hooks/useTasks";
 
 
 const TaskList = () => {
     // the useState and useReducer hook are ways to maintain local state in a component
 
     // use the useContext hook to access the lifted state
-    const {tasks, dispatch} = useContext(TasksContext);
-    const {user,} = useContext(AuthContext);
+    const {tasks, dispatch} = useTasks();
+    const {user,} = useAuth();
 
 
     return (
