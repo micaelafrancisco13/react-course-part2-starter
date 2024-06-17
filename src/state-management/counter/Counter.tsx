@@ -1,25 +1,20 @@
-import { useReducer } from 'react';
-import counterReducer from "./counterReducer";
+import useCounterStore from "./store";
 
 const Counter = () => {
-    // state hook is not needed anymore
-    // const [value, setValue] = useState(0);
-
-    const [value, dispatch] = useReducer(counterReducer, 0);
-
-    // by dispatching an action, we're telling React that the user is trying to increment the counter
+    // use the useCounterStore Zustand hook as a replacement for the useReducer hook
+    const { counter, increment, reset } = useCounterStore();
 
     return (
         <div>
-            Counter ({value})
+            Counter ({counter})
             <button
-                onClick={() => dispatch({ type: 'INCREMENT' })}
+                onClick={() => increment()}
                 className="btn btn-primary mx-1"
             >
                 Increment
             </button>
             <button
-                onClick={() => dispatch({ type: 'RESET' })}
+                onClick={() => reset()}
                 className="btn btn-primary mx-1"
             >
                 Reset
