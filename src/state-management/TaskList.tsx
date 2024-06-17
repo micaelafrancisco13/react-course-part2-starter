@@ -1,5 +1,6 @@
 import {useContext} from 'react';
 import TasksContext from "./context/tasksContext";
+import AuthContext from "./context/authContext";
 
 
 const TaskList = () => {
@@ -7,10 +8,12 @@ const TaskList = () => {
 
     // use the useContext hook to access the lifted state
     const {tasks, dispatch} = useContext(TasksContext);
+    const {user,} = useContext(AuthContext);
 
 
     return (
         <>
+            <p>User {user}</p>
             <button
                 onClick={() =>
                     dispatch({type: 'ADD', task: {id: Date.now(), title: `Task ${Date.now()}`}})
