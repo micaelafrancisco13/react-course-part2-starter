@@ -9,8 +9,8 @@ import AuthContext from "./state-management/context/authContext";
 
 function App() {
     // lift the local state up
-    const [tasks, taskdispatch] = useReducer(tasksReducer, []);
-    const [user, authdispatch] = useReducer(authReducer, '');
+    const [tasks, taskDispatch] = useReducer(tasksReducer, []);
+    const [user, authDispatch] = useReducer(authReducer, '');
 
     // first, lift the local state up to the App component
     // second, create a context object with two properties of data [state, setState]
@@ -19,8 +19,8 @@ function App() {
 
     // wrap the component tree with Provider component
     return (
-        <AuthContext.Provider value={{user, dispatch: authdispatch}}>
-            <TasksContext.Provider value={{tasks, dispatch: taskdispatch}}>
+        <AuthContext.Provider value={{user, dispatch: authDispatch}}>
+            <TasksContext.Provider value={{tasks, dispatch: taskDispatch}}>
                 <NavBar/>
                 <HomePage/>
             </TasksContext.Provider>
